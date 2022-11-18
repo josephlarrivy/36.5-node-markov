@@ -5,10 +5,11 @@ class MarkovMachine {
 
   /** build markov machine; read in text.*/
 
+  
   constructor(text) {
     let words = text.split(/[ \r\n]+/);
     this.words = words.filter(c => c !== "");
-    console.log(words)
+    // console.log(words)
     this.makeChains(words);
   }
 
@@ -17,8 +18,9 @@ class MarkovMachine {
    *  for text of "the cat in the hat", chains will be
    *  {"the": ["cat", "hat"], "cat": ["in"], "in": ["the"], "hat": [null]} */
 
+
   makeChains(input) {
-    let map = new Map();
+    let collection = new Map();
     for (let i=0; i<input.length; i++) {
       // console.log(input[i]);
       let word = input[i];
@@ -29,21 +31,26 @@ class MarkovMachine {
         followingWord = null;
       }
       // console.log(word, followingWord)
-      if (map.has(word)) {
-        map.get(word).push(followingWord);
+      if (collection.has(word)) {
+        collection.get(word).push(followingWord);
       } else {
-        map.set(word, [followingWord]);
+        collection.set(word, [followingWord]);
       }
     }
-    console.log(map)
+    console.log(collection)
+    this.collection = collection
   }
 
-
-  /** return random text from chains */
+  
 
   makeText(numWords = 100) {
-    // TODO
-  }
+      let keys = Array.from(inputMap.keys());
+      return keys[Math.floor(Math.random() * keys.length)];
+
+    firstKey = getRandomKey(collection);
+    return firstKey;
+    }
 }
 
-let m = new MarkovMachine("the cat in the hat")
+
+module.exports = {MarkovMachine};
