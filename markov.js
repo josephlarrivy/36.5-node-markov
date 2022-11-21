@@ -41,16 +41,23 @@ class MarkovMachine {
     this.collection = collection
   }
 
-  
+  static choice(array) {
+    return array[Math.floor(Math.random()*array.length)]
+  }
 
   makeText(numWords = 100) {
-      let keys = Array.from(inputMap.keys());
-      return keys[Math.floor(Math.random() * keys.length)];
-
-    firstKey = getRandomKey(collection);
-    return firstKey;
+    let keys = Array.from(collection.keys());
+    let key = MarkovMachine.choice(keys);
+      // return keys[Math.floor(Math.random() * keys.length)];
+    let out = [];
+    // firstKey = getRandomKey(collection);
+    // return firstKey;
+    while(out.length <= numWords && key !== null) {
+      out.push(key)
+      key = MarkovMachine.choice(this.chains.get(key));
     }
+    return out.join(' ');
+  }
 }
-
 
 module.exports = {MarkovMachine};
